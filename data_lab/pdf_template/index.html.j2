@@ -1,0 +1,11 @@
+{#- Template for export_pdf.py: nbconvert's lab template, with long code lines wrapped instead of cut off at the page edge -#}
+{%- extends 'lab/index.html.j2' -%}
+{% block extra_css %}
+{{ super() }}
+<style id="wrap-code-lines">
+  .jp-InputArea-editor pre, .jp-OutputArea-output pre, .highlight pre {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+  }
+</style>
+{% endblock extra_css %}

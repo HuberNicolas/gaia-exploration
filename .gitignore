@@ -19,3 +19,6 @@ data_lab/output/exploration/features/jointplots/
 
 # Intermediate pickles written and read by the notebook
 data_lab/output/pk/
+
+# Executed copies of the notebook, used for the PDF export
+data_lab/*.executed.ipynb
