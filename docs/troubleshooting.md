@@ -10,6 +10,16 @@ The notebook uses paths relative to `data_lab/`. Start Jupyter or `nbconvert` in
 ydata-profiling 4.7 imports `pkg_resources`, which newer setuptools versions no longer contain. `uv.lock` pins
 setuptools 69.2.0. Run `uv sync` and start Jupyter with `uv run`.
 
+## Plots are saved but not shown in the notebook
+
+ydata-profiling leaves matplotlib unable to show figures inline ("FigureCanvasAgg is non-interactive, and thus cannot
+be shown"). The cells that create a profiling report therefore end with `%matplotlib inline`. If you run cells out of
+order, run `%matplotlib inline` again after a profiling report.
+
+## `Executable doesn't exist` when exporting the PDF
+
+Playwright needs its own Chromium. Run `uv run playwright install chromium` once.
+
 ## `ImportError: Missing optional dependency 'tabulate'`
 
 `DataFrame.to_markdown()` needs tabulate. It is in `uv.lock`; run `uv sync`.

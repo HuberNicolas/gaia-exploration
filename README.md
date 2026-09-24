@@ -36,7 +36,7 @@ The classifier built on this analysis is in a separate repository,
 - 🧭 Dimensionality reduction (PCA, UMAP, t-SNE), k-means and hierarchical clustering
 - 🧱 Preprocessing: equi-width and equi-depth binning, scaling, discretisation, binarisation
 - 📑 Profiling reports with ydata-profiling
-- 📄 Final report as PDF ([fda_a2_25061944.pdf](fda_a2_25061944.pdf)) and Excel workbook
+- 📄 Final report as PDF ([fda_a2_25061944.pdf](fda_a2_25061944.pdf)), a PDF of the 2026 run and the Excel workbook
 
 ## Contents
 
@@ -74,14 +74,15 @@ flowchart LR
     nb --> reports[data_lab/output/exploration/reports<br/>profiling reports, not committed]
     csv --> tasks[data_lab/task1-4.py]
     tasks --> taskxlsx[data_lab/output/excel/task1-4.xlsx]
-    nb -. nbconvert .-> pdf[fda_a2_25061944.pdf]
+    nb -.->|export_pdf.py| pdf[fda_a2_25061944_rerun_2026.pdf]
 ```
 
 | Part | File | What it does |
 |---|---|---|
 | Notebook | [data_lab/fda_a2_25061944.ipynb](data_lab/fda_a2_25061944.ipynb) | The whole analysis: exploration (1A), preprocessing (1B), correlation, dimensionality reduction, clustering and feature importance |
 | Task scripts | [data_lab/task1.py](data_lab/task1.py) … [task4.py](data_lab/task4.py) | The four preprocessing tasks of 1B as standalone scripts: binning, scaling, discretisation, binarisation |
-| Report | [fda_a2_25061944.pdf](fda_a2_25061944.pdf) | The notebook exported as PDF (102 pages) |
+| Report | [fda_a2_25061944.pdf](fda_a2_25061944.pdf) | The notebook as submitted in 2024, exported with LaTeX (102 pages) |
+| PDF export | [data_lab/export_pdf.py](data_lab/export_pdf.py) | Exports an executed notebook to PDF with Chromium, without LaTeX; [fda_a2_25061944_rerun_2026.pdf](fda_a2_25061944_rerun_2026.pdf) (98 pages) was made this way |
 
 See [docs/notebook.md](docs/notebook.md) for the sections of the notebook and its settings.
 
@@ -92,11 +93,13 @@ See [docs/notebook.md](docs/notebook.md) for the sections of the notebook and it
 | [data/](data) | The Gaia sample and the column descriptions, see [Data](#data) |
 | [data_lab/fda_a2_25061944.ipynb](data_lab/fda_a2_25061944.ipynb) | Notebook with the analysis |
 | [data_lab/task1.py](data_lab/task1.py) … [task4.py](data_lab/task4.py) | Preprocessing tasks as scripts |
+| [data_lab/export_pdf.py](data_lab/export_pdf.py), [data_lab/pdf_template/](data_lab/pdf_template) | PDF export and its nbconvert template |
 | [data_lab/fda_a2_25061944.xlsx](data_lab/fda_a2_25061944.xlsx) | Submitted Excel workbook, one sheet per task and protocol |
 | [data_lab/exploratory-data-anaylsis.md](data_lab/exploratory-data-anaylsis.md) | Checklist of exploration methods |
 | [data_lab/output/](data_lab/output) | Results of the notebook and the scripts, see [Outputs](#outputs) |
 | [docs/](docs) | Documentation |
-| [fda_a2_25061944.pdf](fda_a2_25061944.pdf) | Final report |
+| [fda_a2_25061944.pdf](fda_a2_25061944.pdf) | Final report as submitted in 2024 |
+| [fda_a2_25061944_rerun_2026.pdf](fda_a2_25061944_rerun_2026.pdf) | The notebook run again in 2026 with the locked versions |
 
 ## Quick start
 
@@ -184,7 +187,7 @@ See [docs/dataset.md](docs/dataset.md) for the columns.
 |---|---|
 | Install dependencies | `uv sync` |
 | Run the notebook headless | see [Quick start](#quick-start) |
-| Export the notebook as PDF | `uv run jupyter nbconvert fda_a2_25061944.ipynb --to pdf` in `data_lab/` (needs a LaTeX installation; not tested in 2026) |
+| Export the notebook as PDF | [docs/notebook.md](docs/notebook.md#export-to-pdf) |
 | Lint | `uv run pylint data_lab/*.py` (rules in [.pylintrc](.pylintrc)) |
 | Format | `uv run black data_lab` |
 

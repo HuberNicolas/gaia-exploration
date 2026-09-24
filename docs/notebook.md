@@ -63,11 +63,33 @@ The pickle files in `output/pk/` pass DataFrames between sections: the "Correlat
 
 ## Export to PDF
 
-The last cell contains the (commented-out) command that produced [fda_a2_25061944.pdf](../fda_a2_25061944.pdf). With
-uv, run it in `data_lab/`:
+The submitted report [fda_a2_25061944.pdf](../fda_a2_25061944.pdf) was made with nbconvert and LaTeX (the command is
+in the last cell). [fda_a2_25061944_rerun_2026.pdf](../fda_a2_25061944_rerun_2026.pdf) was made with
+[export_pdf.py](../data_lab/export_pdf.py), which needs no LaTeX: nbconvert's webpdf exporter prints the notebook with
+Chromium. The template in [pdf_template/](../data_lab/pdf_template) wraps long code lines, which would otherwise be cut
+off at the page edge.
 
-```bash
-uv run jupyter nbconvert fda_a2_25061944.ipynb --to pdf --output fda_a2_25061944.pdf
-```
+Run these commands in `data_lab/`:
 
-It needs a LaTeX installation and a notebook with outputs (run it first). This was not tested in 2026.
+1. Install Chromium for Playwright (once):
+
+   ```bash
+   uv run playwright install chromium
+   ```
+
+2. Run the notebook into an executed copy (about 11 minutes):
+
+   ```bash
+   uv run jupyter nbconvert --to notebook --execute fda_a2_25061944.ipynb --output fda_a2_25061944.executed.ipynb
+   ```
+
+3. Export the executed copy:
+
+   ```bash
+   uv run python export_pdf.py fda_a2_25061944.executed.ipynb ../fda_a2_25061944_rerun_2026.pdf
+   ```
+
+The executed copy is ignored by git. The PDF is about 26 MB; the pair plot of all attributes alone is 14 MB.
+
+The profiling reports are shown as progress bars only; the reports themselves are HTML files in
+`output/exploration/reports/`.
