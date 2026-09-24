@@ -1,7 +1,13 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
 from sklearn.preprocessing import LabelEncoder
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
+OUTPUT_DIR = REPO_ROOT / "data_lab" / "output" / "excel"
 
 def discretize_column(column, df, df_orig, bins, categories):
     """
@@ -41,19 +47,24 @@ def discretize_column(column, df, df_orig, bins, categories):
     return df, df_orig
 
 
-df = pd.read_csv(filepath_or_buffer="./data/32130_AT2_25061944.csv")
+def main():
+    df = pd.read_csv(filepath_or_buffer=DATA_FILE)
 
-df_orig = df.copy(deep=True)
+    df_orig = df.copy(deep=True)
 
-# Introduce categories and the corresponding quantities
-mass_flame_categories = ['Small', 'Medium', 'Large']
-mass_flame_bins = [0, 2, 4, 8]
+    # Introduce categories and the corresponding quantities
+    mass_flame_categories = ['Small', 'Medium', 'Large']
+    mass_flame_bins = [0, 2, 4, 8]
 
-df, df_orig = discretize_column('Mass-Flame', df, df_orig, mass_flame_bins, mass_flame_categories)
+    df, df_orig = discretize_column('Mass-Flame', df, df_orig, mass_flame_bins, mass_flame_categories)
 
-# Display the frequency of the categories
-frequencies = df['Mass-Flame_categorized'].value_counts()
-print(frequencies)
+    # Display the frequency of the categories
+    frequencies = df['Mass-Flame_categorized'].value_counts()
+    print(frequencies)
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    df.to_excel(OUTPUT_DIR / "task3.xlsx")
 
 
-df.to_excel('./data_lab/output/excel/task3.xlsx')
+if __name__ == "__main__":
+    main()

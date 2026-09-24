@@ -1,11 +1,10 @@
-import numpy as np
+from pathlib import Path
+
 import pandas as pd
 
-from sklearn.preprocessing import LabelEncoder
-
-
-import numpy as np
-import pandas as pd
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
+OUTPUT_DIR = REPO_ROOT / "data_lab" / "output" / "excel"
 
 
 def binarize_column(column, df, df_orig, positive_class):
@@ -18,12 +17,14 @@ def binarize_column(column, df, df_orig, positive_class):
     - column: the column name in 'df' to be binarized.
     - df: the DataFrame containing the column to be processed.
     - df_orig: the DataFrame to which the binarized values will be appended.
-    - positive_class: a list of unique values to be treated as the positive class (1).
+    - positive_class: a value or a list of values to be treated as the positive class (1).
 
     Returns:
     - df: the DataFrame with the added binarized column.
     - df_orig: the DataFrame with the binarized column values appended.
     """
+
+    positive_classes = [positive_class] if isinstance(positive_class, str) else list(positive_class)
 
     # Directly create a binarized column based on whether the value is in positive_classes
     df[f'{column}_binarized'] = df[column].apply(lambda x: 1 if x in positive_classes else 0)
@@ -37,14 +38,21 @@ def binarize_column(column, df, df_orig, positive_class):
     return df, df_orig
 
 
-df = pd.read_csv(filepath_or_buffer="./data/32130_AT2_25061944.csv")
+def main():
+    df = pd.read_csv(filepath_or_buffer=DATA_FILE)
 
-df_orig = df.copy(deep=True)
+    df_orig = df.copy(deep=True)
 
-spytype_els_classes = df['SpType-ELS'].unique()
-spytype_els_classes[1]
+    spytype_els_classes = df['SpType-ELS'].unique()
 
-positive_classes = spytype_els_classes[0] # define A as positive class
-df, df_orig = binarize_column('SpType-ELS', df, df_orig, positive_classes)
+    # The first class in the file is B, so B becomes the positive class (1).
+    # This matches the submitted task4.xlsx.
+    positive_class = spytype_els_classes[0]
+    df, df_orig = binarize_column('SpType-ELS', df, df_orig, positive_class)
 
-df.to_excel('./data_lab/output/excel/task4.xlsx')
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    df.to_excel(OUTPUT_DIR / "task4.xlsx")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,13 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
+OUTPUT_DIR = REPO_ROOT / "data_lab" / "output" / "excel"
 
 
 
@@ -27,8 +33,10 @@ def scale_column(column, df, df_orig, method='minmax'):
         scaler = RobustScaler()
     elif method == 'standard':
         scaler = StandardScaler()
+    elif method == 'softmax':
+        scaler = None  # handled below
     else:
-        raise ValueError(f"Unsupported scaling method ({method}). Choose 'minmax', 'robust', or 'standard'.")
+        raise ValueError(f"Unsupported scaling method ({method}). Choose 'minmax', 'robust', 'softmax' or 'standard'.")
 
     # Reshape the data to (-1, 1) because it's a single feature
     values = df[column].values.reshape(-1, 1)
@@ -57,11 +65,17 @@ def scale_column(column, df, df_orig, method='minmax'):
     return df, df_orig
 
 
-df = pd.read_csv(filepath_or_buffer="./data/32130_AT2_25061944.csv")
+def main():
+    df = pd.read_csv(filepath_or_buffer=DATA_FILE)
 
-df_orig = df.copy(deep=True)
+    df_orig = df.copy(deep=True)
 
-df, df_orig = scale_column('Age-Flame', df, df_orig, 'minmax')
-df, df_orig = scale_column('Age-Flame', df, df_orig, 'standard')
+    df, df_orig = scale_column('Age-Flame', df, df_orig, 'minmax')
+    df, df_orig = scale_column('Age-Flame', df, df_orig, 'standard')
 
-df.to_excel('./data_lab/output/excel/task2.xlsx')
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    df.to_excel(OUTPUT_DIR / "task2.xlsx")
+
+
+if __name__ == "__main__":
+    main()
