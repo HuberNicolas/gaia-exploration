@@ -18,8 +18,6 @@ dependencies = [
     "seaborn>=0.10.1,<0.13",  # upper bound required by ydata-profiling
     "httpx>=0.26.0,<0.27",
     "python-dotenv>=1.0.1,<2",
-    "pylint>=3.0.3,<4",
-    "black>=24.2.0,<25",
     "xlrd>=2.0.1,<3",
     "openpyxl>=3.1.2,<4",
     "scipy>=1.4.1,<1.12",  # upper bound required by ydata-profiling
@@ -43,18 +41,11 @@ package = false
 # Resolve only package versions that existed when the assignment was submitted (April 2024).
 exclude-newer = "2024-04-03T00:00:00Z"
 
-[tool.black]
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+# The notebook is kept as submitted in 2024 and is not linted or formatted
+extend-exclude = ["data", "*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]  # errors, Pyflakes, import sorting; no style modernisation
