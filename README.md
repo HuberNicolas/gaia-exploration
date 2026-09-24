@@ -8,6 +8,7 @@
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-2.2-150458?logo=pandas&logoColor=white)
 ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white)
+![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 [Quick start](#quick-start) · [Outputs](#outputs) · [Documentation](#documentation)
@@ -61,7 +62,7 @@ The classifier built on this analysis is in a separate repository,
 | Data | ![pandas](https://img.shields.io/badge/pandas-2.2.1-150458?logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-1.26.4-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-1.11.4-8CAAE6?logo=scipy&logoColor=white) |
 | Analysis | ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4.1-F7931E?logo=scikitlearn&logoColor=white) ![UMAP](https://img.shields.io/badge/umap--learn-0.5.6-4B8BBE) ![ydata-profiling](https://img.shields.io/badge/ydata--profiling-4.7.0-E24C4C) |
 | Plots | ![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7.3-11557C) ![seaborn](https://img.shields.io/badge/seaborn-0.12.2-4C72B0) |
-| Environment | ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white) |
+| Environment and linting | ![uv](https://img.shields.io/badge/uv-DE5FE9?logo=uv&logoColor=white) ![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=black) |
 
 ## How it works
 
@@ -188,8 +189,9 @@ See [docs/dataset.md](docs/dataset.md) for the columns.
 | Install dependencies | `uv sync` |
 | Run the notebook headless | see [Quick start](#quick-start) |
 | Export the notebook as PDF | [docs/notebook.md](docs/notebook.md#export-to-pdf) |
-| Lint | `uv run pylint data_lab/*.py` (rules in [.pylintrc](.pylintrc)) |
-| Format | `uv run black data_lab` |
+| Lint | `uvx ruff check .` |
+| Format | `uvx ruff format .` |
+| Environment, linting, where to change what | [docs/development.md](docs/development.md) |
 
 ## Documentation
 
@@ -197,6 +199,7 @@ See [docs/dataset.md](docs/dataset.md) for the columns.
 |---|---|
 | [docs/notebook.md](docs/notebook.md) | Sections, settings and outputs of the notebook |
 | [docs/dataset.md](docs/dataset.md) | Columns of the dataset |
+| [docs/development.md](docs/development.md) | Environment, linting, code layout |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Problems you may run into |
 
 ## Known issues

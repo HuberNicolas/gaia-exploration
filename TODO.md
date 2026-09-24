@@ -18,6 +18,7 @@ Open tasks before the repository is made public. See also [Known issues](README.
 - [x] Stop committing the intermediate pickle files (`data_lab/output/pk/`)
 - [x] Stop the notebook from deleting `output/excel/task*.xlsx` and the solution workbook
 - [x] Wrap the task scripts in `main()`, make paths independent of the working directory, fix two small bugs
+- [x] Replace pylint and black with Ruff; lint and format the scripts (notebook excluded); outputs unchanged
 - [x] Shrink the history with `git filter-repo`: remove the per-pair plots and pickles from all commits
 
 ## 3. Documentation
