@@ -32,5 +32,5 @@ Open tasks before the repository is made public. See also [Known issues](README.
 - [x] Credit third parties (ESA Gaia, DPAC, UTS teaching team)
 - [x] Check for secrets in the files and the git history (none found)
 - [x] Rewrite the commit author e-mail to the current address
-- [ ] Force-push the rewritten history (`git push --force origin main`)
+- [ ] Force-push the rewritten history (`git push --force -u origin main`)
 - [ ] Set the GitHub repository to public
