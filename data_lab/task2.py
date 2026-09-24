@@ -2,8 +2,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+from sklearn.preprocessing import MinMaxScaler, RobustScaler, StandardScaler
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
