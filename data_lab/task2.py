@@ -9,8 +9,7 @@ DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
 OUTPUT_DIR = REPO_ROOT / "data_lab" / "output" / "excel"
 
 
-
-def scale_column(column, df, df_orig, method='minmax'):
+def scale_column(column, df, df_orig, method="minmax"):
     """
     Scales a column in 'df' using the specified 'method' and appends the scaled values to 'df_orig'.
 
@@ -26,13 +25,13 @@ def scale_column(column, df, df_orig, method='minmax'):
     """
 
     # Select the scaler based on the 'method' parameter
-    if method == 'minmax':
+    if method == "minmax":
         scaler = MinMaxScaler()
-    elif method == 'robust':
+    elif method == "robust":
         scaler = RobustScaler()
-    elif method == 'standard':
+    elif method == "standard":
         scaler = StandardScaler()
-    elif method == 'softmax':
+    elif method == "softmax":
         scaler = None  # handled below
     else:
         raise ValueError(f"Unsupported scaling method ({method}). Choose 'minmax', 'robust', 'softmax' or 'standard'.")
@@ -41,7 +40,7 @@ def scale_column(column, df, df_orig, method='minmax'):
     values = df[column].values.reshape(-1, 1)
 
     # Apply the selected scaler
-    if method == 'softmax':
+    if method == "softmax":
         # Custom softmax scaling
         exp_values = np.exp(values - np.max(values))
         scaled_values = exp_values / np.sum(exp_values)
@@ -50,7 +49,7 @@ def scale_column(column, df, df_orig, method='minmax'):
         scaled_values = scaler.fit_transform(values)
 
     # Assign scaled values back to df with a new column name
-    df[f'{column}_scaled_{method}'] = scaled_values.flatten()
+    df[f"{column}_scaled_{method}"] = scaled_values.flatten()
 
     # Create a temporary Series for the scaled values with the same index as df
     scaled_series = pd.Series(scaled_values.flatten(), index=df.index)
@@ -59,7 +58,7 @@ def scale_column(column, df, df_orig, method='minmax'):
     mask = ~df[column].isnull()
 
     # Assign scaled values to df_orig based on the mask
-    df_orig.loc[df.index[mask], f'{column}_applied_scaled_{method}'] = scaled_series[mask].values
+    df_orig.loc[df.index[mask], f"{column}_applied_scaled_{method}"] = scaled_series[mask].values
 
     return df, df_orig
 
@@ -69,8 +68,8 @@ def main():
 
     df_orig = df.copy(deep=True)
 
-    df, df_orig = scale_column('Age-Flame', df, df_orig, 'minmax')
-    df, df_orig = scale_column('Age-Flame', df, df_orig, 'standard')
+    df, df_orig = scale_column("Age-Flame", df, df_orig, "minmax")
+    df, df_orig = scale_column("Age-Flame", df, df_orig, "standard")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     df.to_excel(OUTPUT_DIR / "task2.xlsx")

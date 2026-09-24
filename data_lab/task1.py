@@ -19,6 +19,7 @@ def equi_width_binning(series, n_bins):
 
     return bins
 
+
 # Equi-depth binning
 def equi_depth_binning(series, n_bins):
     sorted_series = series.sort_values()
@@ -28,7 +29,7 @@ def equi_depth_binning(series, n_bins):
     for i, (index, value) in enumerate(sorted_series.items()):
         bins.at[index] = i // values_per_bin
 
-    bins = bins.clip(upper=n_bins-1)
+    bins = bins.clip(upper=n_bins - 1)
 
     return bins
 
@@ -40,16 +41,16 @@ def main():
     n_bins = round(math.sqrt(df.shape[0]))
 
     # Equi-width binning on RA_ICRS
-    df[f'RA_ICRS_equip_width_{n_bins}'] = equi_width_binning(df['RA_ICRS'], n_bins=n_bins)
+    df[f"RA_ICRS_equip_width_{n_bins}"] = equi_width_binning(df["RA_ICRS"], n_bins=n_bins)
 
     # Equi-depth binning on RA_ICRS
-    df[f'RA_ICRS_equip_depth_{n_bins}'] = equi_depth_binning(df['RA_ICRS'], n_bins=n_bins)
+    df[f"RA_ICRS_equip_depth_{n_bins}"] = equi_depth_binning(df["RA_ICRS"], n_bins=n_bins)
 
     # Equi-width binning on DE_ICRS
-    df[f'DE_ICRS_equip_width_{n_bins}'] = equi_width_binning(df['DE_ICRS'], n_bins=n_bins)
+    df[f"DE_ICRS_equip_width_{n_bins}"] = equi_width_binning(df["DE_ICRS"], n_bins=n_bins)
 
     # Equi-depth binning on DE_ICRS
-    df[f'DE_ICRS_equip_depth_{n_bins}'] = equi_depth_binning(df['DE_ICRS'], n_bins=n_bins)
+    df[f"DE_ICRS_equip_depth_{n_bins}"] = equi_depth_binning(df["DE_ICRS"], n_bins=n_bins)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     df.to_excel(OUTPUT_DIR / "task1.xlsx")

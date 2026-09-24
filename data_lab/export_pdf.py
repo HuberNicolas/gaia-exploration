@@ -3,6 +3,7 @@
 Usage (in data_lab/, after `uv run playwright install chromium`):
     uv run python export_pdf.py NOTEBOOK.ipynb OUTPUT.pdf
 """
+
 import argparse
 from pathlib import Path
 

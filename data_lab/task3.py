@@ -7,6 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = REPO_ROOT / "data" / "32130_AT2_25061944.csv"
 OUTPUT_DIR = REPO_ROOT / "data_lab" / "output" / "excel"
 
+
 def discretize_column(column, df, df_orig, bins, categories):
     """
     Discretizes the specified column into categories based on bins, encodes the categories numerically,
@@ -25,22 +26,22 @@ def discretize_column(column, df, df_orig, bins, categories):
     """
 
     # Discretize the column based on the provided bins and categories
-    categorized_column_name = f'{column}_categorized'
+    categorized_column_name = f"{column}_categorized"
     df[categorized_column_name] = pd.cut(df[column], bins=bins, labels=categories, right=False)
 
     # Initialize the LabelEncoder
     label_encoder = LabelEncoder()
 
     # Fit and transform the categories to numeric values
-    numeric_column_name = f'{column}_numeric'
+    numeric_column_name = f"{column}_numeric"
     df[numeric_column_name] = label_encoder.fit_transform(df[categorized_column_name])
 
     # Mask to identify rows with non-null values in the categorized column
     mask = ~df[categorized_column_name].isnull()
 
     # Append the numerically encoded values to df_orig based on the mask
-    df_orig.loc[df.index[mask], f'{column}_applied_category'] = df.loc[mask, categorized_column_name].values
-    df_orig.loc[df.index[mask], f'{column}_applied_numeric'] = df.loc[mask, numeric_column_name].values
+    df_orig.loc[df.index[mask], f"{column}_applied_category"] = df.loc[mask, categorized_column_name].values
+    df_orig.loc[df.index[mask], f"{column}_applied_numeric"] = df.loc[mask, numeric_column_name].values
 
     return df, df_orig
 
@@ -51,13 +52,13 @@ def main():
     df_orig = df.copy(deep=True)
 
     # Introduce categories and the corresponding quantities
-    mass_flame_categories = ['Small', 'Medium', 'Large']
+    mass_flame_categories = ["Small", "Medium", "Large"]
     mass_flame_bins = [0, 2, 4, 8]
 
-    df, df_orig = discretize_column('Mass-Flame', df, df_orig, mass_flame_bins, mass_flame_categories)
+    df, df_orig = discretize_column("Mass-Flame", df, df_orig, mass_flame_bins, mass_flame_categories)
 
     # Display the frequency of the categories
-    frequencies = df['Mass-Flame_categorized'].value_counts()
+    frequencies = df["Mass-Flame_categorized"].value_counts()
     print(frequencies)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

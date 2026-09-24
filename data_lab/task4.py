@@ -27,13 +27,13 @@ def binarize_column(column, df, df_orig, positive_class):
     positive_classes = [positive_class] if isinstance(positive_class, str) else list(positive_class)
 
     # Directly create a binarized column based on whether the value is in positive_classes
-    df[f'{column}_binarized'] = df[column].apply(lambda x: 1 if x in positive_classes else 0)
+    df[f"{column}_binarized"] = df[column].apply(lambda x: 1 if x in positive_classes else 0)
 
     # Mask to identify rows with non-null values in the original column
     mask = ~df[column].isnull()
 
     # Append the binarized values to df_orig based on the mask
-    df_orig.loc[df.index[mask], f'{column}_applied_binarized'] = df.loc[mask, f'{column}_binarized'].values
+    df_orig.loc[df.index[mask], f"{column}_applied_binarized"] = df.loc[mask, f"{column}_binarized"].values
 
     return df, df_orig
 
@@ -43,12 +43,12 @@ def main():
 
     df_orig = df.copy(deep=True)
 
-    spytype_els_classes = df['SpType-ELS'].unique()
+    spytype_els_classes = df["SpType-ELS"].unique()
 
     # The first class in the file is B, so B becomes the positive class (1).
     # This matches the submitted task4.xlsx.
     positive_class = spytype_els_classes[0]
-    df, df_orig = binarize_column('SpType-ELS', df, df_orig, positive_class)
+    df, df_orig = binarize_column("SpType-ELS", df, df_orig, positive_class)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     df.to_excel(OUTPUT_DIR / "task4.xlsx")
