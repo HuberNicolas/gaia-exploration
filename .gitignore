@@ -3,9 +3,19 @@
 
 # Python
 __pycache__
+.venv
 
 # MAC OS
 .DS_Store
 
 # Report
 *.html
+
+# Per-pair plots: one file per feature pair (~3,800 files). They are generated only when
+# GENERATE_PAIR_PLOTS = True in the notebook, see docs/notebook.md
+data_lab/output/exploration/features/corr_above_scatterplot_0/
+data_lab/output/exploration/features/corr_above_jointplot_0/
+data_lab/output/exploration/features/jointplots/
+
+# Intermediate pickles written and read by the notebook
+data_lab/output/pk/
